@@ -4,10 +4,28 @@
 from models import Game
 from views import *
 
+"""
+The controller here handles all user input.
+It delegates all game logic to the model. 
+All display logic lives in the view.
+"""
+
 class GameController:
 
     def __init__(self):
         self.game = Game()
+
+    def handle_strike(self, first):
+        self.game.roll(int(first))
+        results = self.game.results()
+        print(score_board(results))
+
+    def handle_rolls(self, first, second):
+        self.game.roll(first)
+        self.game.roll(second)
+
+        results = self.game.results()
+        print(score_board(results))
 
     def run(self):
 
@@ -18,9 +36,7 @@ class GameController:
             first = input(enter_first())
 
             if first == '10':
-                self.game.roll(int(first))
-                results = self.game.results()
-                print(score_board(results))
+                self.handle_strike(first)
                 continue
 
             if not first.isdigit() or int(first) not in range(0, 11):
@@ -39,13 +55,8 @@ class GameController:
                 print(error_invalid_second(10 - first))
                 continue
 
-            self.game.roll(first)
-            self.game.roll(second)
-
-            results = self.game.results()
-            print(score_board(results))
+            self.handle_rolls(first, second)
 
         print(game_over())
-
 
          
