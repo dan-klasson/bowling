@@ -13,4 +13,7 @@ class TestScoreView(unittest.TestCase):
             "Frame 4: 5\n"
             "Frame 5: 10\n")
         )
-    
+
+    def test_error_invalid_second(self):
+        self.assertEqual(error_invalid_second(5), 
+            "\nInvalid input. Enter digits between 0 and 5\n")
